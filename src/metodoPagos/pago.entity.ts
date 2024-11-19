@@ -1,5 +1,4 @@
 // src/metodoPagos/pago.entity.ts
-import { DetalleReserva } from 'src/detallesReservas/detalleReserva.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('pagos')
@@ -31,6 +30,4 @@ export class Pago {
   @Column()
   cardholderName: string;
 
-  @OneToMany(() => DetalleReserva, detalle => detalle.pago)
-  detalles: DetalleReserva[];
 }

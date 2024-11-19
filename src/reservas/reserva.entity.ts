@@ -1,4 +1,3 @@
-import { DetalleReserva } from 'src/detallesReservas/detalleReserva.entity';
 import { User } from 'src/users/user.entity';
 import { Habitacion } from 'src/habitaciones/habitacion.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
@@ -21,9 +20,7 @@ export class Reserva {
   @Column({ nullable: true })
   notes: string;
 
-  // Relación con detalles de reserva
-  @OneToMany(() => DetalleReserva, detalle => detalle.reserva)
-  detalles: DetalleReserva[];
+
 
   // Relación con usuarios (cada reserva pertenece a un único usuario)
   @ManyToOne(() => User, user => user.reservas, { eager: true })

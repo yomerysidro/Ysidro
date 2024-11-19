@@ -1,5 +1,4 @@
 import { hash } from "bcrypt";
-import { DetalleReserva } from "src/detallesReservas/detalleReserva.entity";
 import { Reserva } from "src/reservas/reserva.entity";
 import { Rol } from "src/roles/rol.entity";
 import {
@@ -54,10 +53,7 @@ export class User {
   @OneToMany(() => Reserva, reserva => reserva.user)
   reservas: Reserva[];
 
-  // Relación con detalles de reserva
-  @OneToMany(() => DetalleReserva, detalle => detalle.user)
-  detalles: DetalleReserva[];
-
+ 
   // Relación con roles mediante tabla pivote personalizada
   @ManyToMany(() => Rol, rol => rol.users)
   @JoinTable({
