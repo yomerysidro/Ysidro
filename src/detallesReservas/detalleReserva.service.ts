@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetalleReserva } from './detalleReserva.entity';
@@ -28,12 +28,12 @@ export class DetalleReservaService {
     const [pago, user, reserva] = await Promise.all([
       this.pagoRepository.findOne({ where: { id: createDetalleReservaDTO.pagoId } }),
       this.userRepository.findOne({ where: { id: createDetalleReservaDTO.userId } }),
-      this.reservaRepository.findOne({ where: { id: createDetalleReservaDTO.reservaId } })
+      this.reservaRepository.findOne({ where: { id: createDetalleReservaDTO.reservaId } }),
     ]);
 
-    if (!pago || !user || !reserva) {
-      throw new Error('Pago, Usuario o Reserva no encontrados'); // Manejo de error simplificado
-    }
+    if (!pago) throw new NotFoundException('Pago no encontrado');
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    if (!reserva) throw new NotFoundException('Reserva no encontrada');
 
     // Crea el detalle de reserva
     const detalleReserva = this.detalleReservaRepository.create({
@@ -47,13 +47,20 @@ export class DetalleReservaService {
   }
 
   async findById(id: number): Promise<DetalleReserva> {
-    return this.detalleReservaRepository.findOne({
+    const detalle = await this.detalleReservaRepository.findOne({
       where: { id },
       relations: ['user', 'reserva', 'pago'],
     });
+
+    if (!detalle) {
+      throw new NotFoundException(`Detalle de reserva con ID ${id} no encontrado`);
+    }
+
+    return detalle;
   }
 
   async delete(id: number): Promise<void> {
-    await this.detalleReservaRepository.delete(id);
+    const detalle = await this.findById(id);
+    await this.detalleReservaRepository.remove(detalle);
   }
 }

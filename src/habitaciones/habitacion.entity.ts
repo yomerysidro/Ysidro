@@ -17,6 +17,10 @@ export class Habitacion {
   @Column({ nullable: true })
   imagePath?: string;
 
-  @Column({ default: 'Disponible' }) // Estado por defecto es 'disponible'
-  status: string; // Estado de la habitación (disponible u ocupado)
+  @Column({
+    type: 'enum',
+    enum: ['Disponible', 'Reservado'], // Define los valores permitidos para el estado
+    default: 'Disponible', // Valor por defecto
+  })
+  status: string; // Estado de la habitación
 }

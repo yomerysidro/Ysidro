@@ -10,7 +10,7 @@ export class PagosController {
     private readonly pagosService: PagosService,
   ) {}
 
-  @Post()
+  @Post() 
   async create(@Body() createPagoDto: CreatePagoDto): Promise<Pago> {
     const { paymentMethod, amount } = createPagoDto;
 

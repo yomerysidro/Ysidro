@@ -1,7 +1,7 @@
 import { DetalleReserva } from 'src/detallesReservas/detalleReserva.entity';
 import { User } from 'src/users/user.entity';
 import { Habitacion } from 'src/habitaciones/habitacion.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Pago } from 'src/metodoPagos/pago.entity';
 
 @Entity('reservas')
@@ -25,9 +25,9 @@ export class Reserva {
   @OneToMany(() => DetalleReserva, detalle => detalle.reserva)
   detalles: DetalleReserva[];
 
-  // Relación con usuarios
-  @ManyToMany(() => User, user => user.reservas)
-  users: User[];
+  // Relación con usuarios (cada reserva pertenece a un único usuario)
+  @ManyToOne(() => User, user => user.reservas, { eager: true })
+  user: User;
 
   // Relación con habitaciones
   @ManyToOne(() => Habitacion, habitacion => habitacion.id, { eager: true })

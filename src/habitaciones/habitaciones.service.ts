@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Habitacion } from './habitacion.entity';
-import { CreateHabitacionDTO } from './dto/create-habitacion.dto';// Corrección aquí
+import { CreateHabitacionDTO } from './dto/create-habitacion.dto';
 import { UpdateHabitacionDTO } from './dto/update-habitaacion.dto';
 
 @Injectable()
@@ -31,7 +31,20 @@ export class HabitacionesService {
 
   async update(id: number, updateHabitacionDto: UpdateHabitacionDTO): Promise<Habitacion> {
     const habitacion = await this.findOne(id);
+    if (!habitacion) {
+      throw new NotFoundException(`Habitación con ID ${id} no encontrada`);
+    }
     Object.assign(habitacion, updateHabitacionDto);
+    return await this.habitacionRepository.save(habitacion);
+  }
+
+  async updateStatus(id: number, status: string): Promise<Habitacion> {
+    const habitacion = await this.findOne(id);
+    if (!habitacion) {
+      throw new NotFoundException(`Habitación con ID ${id} no encontrada`);
+    }
+
+    habitacion.status = status;
     return await this.habitacionRepository.save(habitacion);
   }
 

@@ -9,6 +9,7 @@ import { Rol } from 'src/roles/rol.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([User,Rol])],
   providers: [UsersService, JwtStrategy],
-  controllers: [UsersController]
+  controllers: [UsersController],
+  exports: [TypeOrmModule],
 })
 export class UsersModule {}

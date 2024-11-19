@@ -16,9 +16,4 @@ export class DetalleReserva {
 
     @ManyToOne(() => Pago, pago => pago.detalles, { eager: true }) // Asegúrate de que esta relación sea correcta
     pago: Pago;
-
-
-
-
-    // Otros campos de detalles de reserva que necesites...
 }

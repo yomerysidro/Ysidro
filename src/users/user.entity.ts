@@ -2,21 +2,18 @@ import { hash } from "bcrypt";
 import { DetalleReserva } from "src/detallesReservas/detalleReserva.entity";
 import { Reserva } from "src/reservas/reserva.entity";
 import { Rol } from "src/roles/rol.entity";
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity({ name: 'users' })
 export class User {
-  
-  // Relación con reservas
-  @ManyToMany(() => Reserva, reserva => reserva.users)
-  reservas: Reserva[];
-
-  // Relación con detalles de reserva
-  @OneToMany(() => DetalleReserva, detalle => detalle.user)
-  detalles: DetalleReserva[];
-  
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,8 +29,8 @@ export class User {
   @Column({ unique: true })
   phone: string;
 
-  @Column({ type: 'varchar' }) // Cambiado a tipo 'varchar'
-  fechaNacimiento: string; 
+  @Column({ type: 'varchar' })
+  fechaNacimiento: string;
 
   @Column({ unique: true })
   dni: string;
@@ -50,28 +47,35 @@ export class User {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
-  //personalizar la tabla pivote
+  // Relación con reservas: un usuario puede tener varias reservas (cambiado a @OneToMany)
+  @OneToMany(() => Reserva, reserva => reserva.user)
+  reservas: Reserva[];
+
+  // Relación con detalles de reserva
+  @OneToMany(() => DetalleReserva, detalle => detalle.user)
+  detalles: DetalleReserva[];
+
+  // Relación con roles mediante tabla pivote personalizada
+  @ManyToMany(() => Rol, rol => rol.users)
   @JoinTable({
     name: 'user_has_roles',
     joinColumn: {
-      name: 'id_user'
+      name: 'id_user',
+      referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'id_rol'
-    }
+      name: 'id_rol',
+      referencedColumnName: 'id',
+    },
   })
-  @ManyToMany(() => Rol, (rol) => rol.users)
   roles: Rol[];
- 
 
+  // Encriptar la contraseña antes de insertar el usuario
   @BeforeInsert()
   async hashPassword() {
     this.password = await hash(this.password, Number(process.env.HASH_SALT));
   }
- 
-  
-
 }

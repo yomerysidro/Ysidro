@@ -24,4 +24,8 @@ export class CreateReservaDTO {
   @IsNotEmpty()
   @IsNumber() // ID de pago
   pagoId: number;
+
+  @IsNotEmpty()
+  @IsNumber() // ID del usuario
+  userId: number;
 }

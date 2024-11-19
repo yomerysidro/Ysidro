@@ -24,4 +24,8 @@ export class UpdateReservaDTO {
   @IsOptional()
   @IsNumber()
   pagoId?: number; // ID de pago opcional
+
+  @IsOptional()
+  @IsNumber()
+  userId?: number; // ID del usuario opcional
 }

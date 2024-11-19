@@ -18,8 +18,9 @@ export class ReservasController {
     const reservas = await this.reservasService.findAll();
     return reservas.map(reserva => ({
       ...reserva,
-      habitacion: reserva.habitacion, // Cargar la relación habitacion
-      pago: reserva.pago, // Cargar la relación pago
+      habitacion: reserva.habitacion,
+      pago: reserva.pago,
+      user: reserva.user, // Incluye el usuario relacionado
     }));
   }
 
@@ -28,8 +29,9 @@ export class ReservasController {
     const reserva = await this.reservasService.findOne(id);
     return {
       ...reserva,
-      habitacion: reserva.habitacion, // Cargar la relación habitacion
-      pago: reserva.pago, // Cargar la relación pago
+      habitacion: reserva.habitacion,
+      pago: reserva.pago,
+      user: reserva.user, // Incluye el usuario relacionado
     };
   }
 

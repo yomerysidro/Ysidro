@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { HabitacionesService } from './habitaciones.service';
@@ -36,14 +36,8 @@ export class HabitacionesController {
     @Body() createHabitacionDto: CreateHabitacionDTO,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<Habitacion> {
-    // Si hay un archivo, lo sube al storage y asigna la URL generada
     if (file) {
-      createHabitacionDto.imagePath = file.path; // Guarda la ruta local en imagePath
-    } else if (!file && createHabitacionDto.imagePath) {
-      // Si no hay archivo y se proporciona una URL
-      createHabitacionDto.imagePath = createHabitacionDto.imagePath; // Usa la URL directamente
-    } else {
-      createHabitacionDto.imagePath = ''; // Si no hay imagen ni URL, asigna vacio
+      createHabitacionDto.imagePath = file.path;
     }
     return this.habitacionesService.create(createHabitacionDto);
   }
@@ -54,6 +48,17 @@ export class HabitacionesController {
     @Body() updateHabitacionDto: UpdateHabitacionDTO,
   ): Promise<Habitacion> {
     return this.habitacionesService.update(+id, updateHabitacionDto);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: string,
+    @Body('status') status: string,
+  ): Promise<Habitacion> {
+    if (!['Disponible', 'Reservado', 'Mantenimiento'].includes(status)) {
+      throw new BadRequestException('Estado no válido');
+    }
+    return this.habitacionesService.updateStatus(+id, status);
   }
 
   @Delete(':id')
