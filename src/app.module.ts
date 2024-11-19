@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      url: process.env.DATABASE_URL || 'mysql://root:password@localhost:3306/leona', // Usa DATABASE_URL para producción
+      url: process.env.DATABASE_URL || 'mysql://root:yomer@localhost:3306/leona', // Usa DATABASE_URL para producción
       entities: [__dirname + '/**/*.entity{.ts,.js}'], // Configuración de entidades
       synchronize: process.env.TYPEORM_SYNC === 'true' || false, // Sincronización desactivada en producción
       logging: process.env.TYPEORM_LOGGING === 'true' || false, // Logs de consultas desactivados por defecto
