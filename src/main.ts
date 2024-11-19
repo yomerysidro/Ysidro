@@ -5,15 +5,16 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Habilitar validaciones globales
+  // Activar las validaciones globales
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
 
-  // Leer el puerto de las variables de entorno o usar un valor predeterminado
-  const PORT = process.env.PORT || 3000;
+  // Leer el puerto y host desde las variables de entorno o usar valores por defecto
+  const PORT = process.env.PORT || 3000; // Render proporciona el puerto en `process.env.PORT`
+  const HOST = process.env.HOST || '0.0.0.0'; // Escuchar en todas las interfaces por defecto
 
-  // Escuchar en cualquier interfaz (importante para Render)
-  await app.listen(PORT, '0.0.0.0');
+  // Iniciar la aplicación
+  await app.listen(PORT, HOST);
 
-  console.log(`Application is running on: http://localhost:${PORT}`);
+  console.log(`Application is running on: http://${HOST}:${PORT}`);
 }
 bootstrap();
