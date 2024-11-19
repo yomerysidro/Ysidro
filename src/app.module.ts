@@ -18,15 +18,15 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql', // Tipo de base de datos
-      host: process.env.DB_HOST || 'localhost', // Host (usa variable de entorno o 'localhost' por defecto)
-      port: parseInt(process.env.DB_PORT, 10) || 3306, // Puerto (usa variable de entorno o 3306 por defecto)
+      type: 'mysql',
+      host: process.env.DB_HOST || 'localhost', // Host
+      port: parseInt(process.env.DB_PORT, 10) || 3306, // Puerto
       username: process.env.DB_USERNAME || 'root', // Usuario
       password: process.env.DB_PASSWORD || 'yomer', // Contraseña
-      database: process.env.DB_NAME || 'leona', // Nombre de la base de datos
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Rutas a las entidades
-      synchronize: process.env.TYPEORM_SYNC === 'true' || true, // Sincroniza el esquema (desactiva en producción)
-      logging: process.env.TYPEORM_LOGGING === 'true' || true, // Habilita logs de depuración
+      database: process.env.DB_NAME || 'leona', // Base de datos
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Entidades
+      synchronize: process.env.TYPEORM_SYNC === 'true' || true, // Sincronización
+      logging: process.env.TYPEORM_LOGGING === 'true' || true, // Logs
     }),
     UsersModule,
     AuthModule,
@@ -35,7 +35,7 @@ dotenv.config();
     ReservasModule,
     PagosModule,
     DetalleReservaModule,
-    HabitacionesModule
+    HabitacionesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
