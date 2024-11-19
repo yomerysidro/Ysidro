@@ -12,21 +12,23 @@ import { DetalleReservaModule } from './detallesReservas/detalleReserva.module';
 import { HabitacionesModule } from './habitaciones/habitaciones.module';
 import * as dotenv from 'dotenv';
 
-// Cargar las variables de entorno desde un archivo .env
-dotenv.config();
+// Cargar las variables de entorno desde .env en desarrollo
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST || 'localhost', // Host
-      port: parseInt(process.env.DB_PORT, 10) || 3306, // Puerto
-      username: process.env.DB_USERNAME || 'root', // Usuario
-      password: process.env.DB_PASSWORD || 'yomer', // Contraseña
-      database: process.env.DB_NAME || 'leona', // Base de datos
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Entidades
-      synchronize: process.env.TYPEORM_SYNC === 'true' || true, // Sincronización
-      logging: process.env.TYPEORM_LOGGING === 'true' || true, // Logs
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT, 10) || 3306,
+      username: process.env.DB_USERNAME || 'root',
+      password: process.env.DB_PASSWORD || 'password',
+      database: process.env.DB_NAME || 'leona',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: process.env.TYPEORM_SYNC === 'true' || false, // Desactiva en producción
+      logging: process.env.TYPEORM_LOGGING === 'true' || false,
     }),
     UsersModule,
     AuthModule,
