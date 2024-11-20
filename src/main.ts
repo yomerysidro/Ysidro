@@ -8,10 +8,15 @@ async function bootstrap() {
   // Activar validaciones globales
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
 
-  // Configurar el puerto de escucha
-  const port = process.env.PORT || 3000;
-  await app.listen(port, () => {
-    console.log(`Application is running on: http://localhost:${port}`);
+  // Habilitar CORS
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
   });
+
+  // Configurar puerto dinámico para Railway
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();

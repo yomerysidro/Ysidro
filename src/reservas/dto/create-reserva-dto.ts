@@ -1,31 +1,35 @@
-import { IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsNumber, IsDateString, Min } from 'class-validator';
 
 export class CreateReservaDTO {
-  @IsNotEmpty()
-  @IsString()
-  startDate: string; // Reservation start date
+  @IsOptional()
+  @IsNumber()
+  id?: number; // ID único de la reserva (opcional, por ejemplo, para actualizaciones)
 
   @IsNotEmpty()
-  @IsString()
-  endDate: string; // Reservation end date
+  @IsDateString()
+  startDate: string; // Fecha de inicio de la reserva
+
+  @IsNotEmpty()
+  @IsDateString()
+  endDate: string; // Fecha de fin de la reserva
 
   @IsOptional()
   @IsString()
-  duration?: string; // Optional reservation duration
+  duration?: string; // Duración opcional de la reserva
 
   @IsOptional()
   @IsString()
-  notes?: string; // Optional notes
+  notes?: string; // Notas opcionales
 
   @IsNotEmpty()
-  @IsNumber() // ID de la habitación
-  habitacionId: number;
+  @IsNumber()
+  habitacionId: number; // ID de la habitación asociada
 
   @IsNotEmpty()
-  @IsNumber() // ID de pago
-  pagoId: number;
+  @IsNumber()
+  pagoId: number; // ID del pago asociado
 
   @IsNotEmpty()
-  @IsNumber() // ID del usuario
-  userId: number;
+  @IsNumber()
+  userId: number; // ID del usuario asociado
 }
