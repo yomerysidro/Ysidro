@@ -24,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
       entities: [__dirname + '/*/.entity{.ts,.js}'], // Corregida la ruta de entidades
       synchronize: true, // Sincronización automática de entidades
       logging: true, // Logs SQL para depuración
+      //mysql://root:sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX@autorack.proxy.rlwy.net:20981/leona
     }),
     UsersModule,
     AuthModule,
