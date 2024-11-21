@@ -8,7 +8,7 @@ import { Habitacion } from 'src/habitaciones/habitacion.entity';
 export class PagosService {
   constructor() {
     // Configura Mercado Pago con el token de acceso
-    mercadopago.access_token = "APP_USR-3278543219849248-112113-b8058294bddbe314837b74b9d9908b05-2112043410";
+ //   mercadopago.access_token = "APP_USR-3278543219849248-112113-b8058294bddbe314837b74b9d9908b05-2112043410";
   }
 
   async createPreference(data: any) {
