@@ -21,7 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || 'sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX',
       database: process.env.DB_NAME || 'leona',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Corregida la ruta de entidades
+      entities: [__dirname + '/*/.entity{.ts,.js}'], // Corregida la ruta de entidades
       synchronize: true, // Sincronización automática de entidades
       logging: true, // Logs SQL para depuración
     }),

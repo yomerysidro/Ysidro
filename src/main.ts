@@ -21,6 +21,6 @@ async function bootstrap() {
 
   await app.listen(PORT, HOST);
 
-  logger.log(`Aplicación ejecutándose en: http://${HOST}:${PORT}`);
+ // logger.log(Aplicación ejecutándose en: http://${HOST}:${PORT} );
 }
 bootstrap();

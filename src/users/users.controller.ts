@@ -13,8 +13,8 @@ export class UsersController {
 
     constructor (private userService: UsersService){}
   
-    @HasRoles(JwtRole.CLIENT)
-    @UseGuards(JwtAuthGuard, JwtRolesGuard)
+    //@HasRoles(JwtRole.CLIENT)
+    //@UseGuards(JwtAuthGuard, JwtRolesGuard)
     @Get() // http://localhost/users -> GET
     findAll() {
         return this.userService.findAll();
