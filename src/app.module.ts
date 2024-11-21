@@ -10,21 +10,21 @@ import { ReservasModule } from './reservas/reservas.module';
 import { PagosModule } from './metodoPagos/pagos.module';
 import { HabitacionesModule } from './habitaciones/habitaciones.module';
 import { ConfigModule } from '@nestjs/config';
+import { PromocionesModule } from './promociones/promociones.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), // Carga variables de entorno desde un archivo .env
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST || 'autorack.proxy.rlwy.net',
-      port: parseInt(process.env.DB_PORT, 10) || 20981,
+      host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', // Asegúrate de que esta variable esté bien configurada
+      port: parseInt(process.env.DB_PORT, 10) || 20981, // Usar variable de entorno o valor por defecto
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || 'sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX',
       database: process.env.DB_NAME || 'leona',
-      entities: [__dirname + '/*/.entity{.ts,.js}'], // Corregida la ruta de entidades
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Asegúrate de que la ruta de las entidades esté correcta
       synchronize: true, // Sincronización automática de entidades
-      logging: true, // Logs SQL para depuración
-      //mysql://root:sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX@autorack.proxy.rlwy.net:20981/leona
+      logging: true, // Habilita los logs para ver las consultas SQL
     }),
     UsersModule,
     AuthModule,
@@ -33,6 +33,7 @@ import { ConfigModule } from '@nestjs/config';
     ReservasModule,
     PagosModule,
     HabitacionesModule,
+    PromocionesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
