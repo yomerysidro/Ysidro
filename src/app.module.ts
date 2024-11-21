@@ -1,5 +1,3 @@
-
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -11,21 +9,22 @@ import { CategoriesModule } from './categories/categories.module';
 import { ReservasModule } from './reservas/reservas.module';
 import { PagosModule } from './metodoPagos/pagos.module';
 import { HabitacionesModule } from './habitaciones/habitaciones.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(), // Carga variables de entorno desde un archivo .env
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'autorack.proxy.rlwy.net', // Host de Railway
-      port: 20981, // Puerto
-      username: 'root', // Usuario
-      password: 'sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX', // Contraseña
-      database: 'leona', // Nombre de tu base de datos personalizada
-      entities: [__dirname + '/*/.entity{.ts,.js}'], // Ruta de las entidades
+      host: process.env.DB_HOST || 'autorack.proxy.rlwy.net',
+      port: parseInt(process.env.DB_PORT, 10) || 20981,
+      username: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || 'sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX',
+      database: process.env.DB_NAME || 'leona',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Corregida la ruta de entidades
       synchronize: true, // Sincronización automática de entidades
-      logging: true, // Logs SQL
+      logging: true, // Logs SQL para depuración
     }),
-    //mysql://root:sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX@autorack.proxy.rlwy.net:20981/railway
     UsersModule,
     AuthModule,
     RolesModule,

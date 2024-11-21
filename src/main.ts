@@ -1,22 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Activar validaciones globales
-  app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
+  // Logger para depuración
+  const logger = new Logger('Bootstrap');
 
-  // Habilitar CORS
+  // Configurar CORS de manera explícita
   app.enableCors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    origin: '*', // Permite todas las fuentes (puedes restringir en producción)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-  // Configurar puerto dinámico para Railway
-  const port = process.env.PORT || 3000;
-  await app.listen(port, '0.0.0.0');
+  // Configurar puerto y host desde variables de entorno o valores por defecto
+  const PORT = process.env.PORT || 20981;
+  const HOST = process.env.HOST || '0.0.0.0';
+
+  await app.listen(PORT, HOST);
+
+  logger.log(`Aplicación ejecutándose en: http://${HOST}:${PORT}`);
 }
 bootstrap();
