@@ -17,14 +17,15 @@ import { PromocionesModule } from './promociones/promociones.module';
     ConfigModule.forRoot(), // Carga variables de entorno desde un archivo .env
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', // Asegúrate de que esta variable esté bien configurada
-      port: parseInt(process.env.DB_PORT, 10) || 20981, // Usar variable de entorno o valor por defecto
+      host: process.env.DB_HOST || 'junction.proxy.rlwy.net', // Asegúrate de que esta variable esté bien configurada
+      port: parseInt(process.env.DB_PORT, 10) || 49599, // Usar variable de entorno o valor por defecto
       username: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || 'sfdPMTTgYyIgdLmPrVPYxKGLEmtkmGSX',
+      password: process.env.DB_PASSWORD || 'iAjKNTFmOLCUYSsjAOdukCMWkzwsNtqd',
       database: process.env.DB_NAME || 'leona',
       entities: [__dirname + '/**/*.entity{.ts,.js}'], // Asegúrate de que la ruta de las entidades esté correcta
       synchronize: true, // Sincronización automática de entidades
       logging: true, // Habilita los logs para ver las consultas SQL
+      //mysql://root:iAjKNTFmOLCUYSsjAOdukCMWkzwsNtqd@junction.proxy.rlwy.net:49599/leona
     }),
     UsersModule,
     AuthModule,
@@ -33,7 +34,7 @@ import { PromocionesModule } from './promociones/promociones.module';
     ReservasModule,
     PagosModule,
     HabitacionesModule,
-    PromocionesModule,
+    PromocionesModule
   ],
   controllers: [AppController],
   providers: [AppService],

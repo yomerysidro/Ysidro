@@ -16,7 +16,7 @@ async function bootstrap() {
   });
 
   // Configurar puerto y host desde variables de entorno o valores por defecto
-  const PORT = process.env.PORT || 20981;
+  const PORT = process.env.PORT || 49599;
   const HOST = process.env.HOST || '0.0.0.0';
 
   await app.listen(PORT, HOST);
