@@ -8,6 +8,6 @@ import { Reserva } from 'src/reservas/reserva.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Habitacion, Reserva])], // Registra las entidades usadas
   controllers: [PagosController], // Controlador para manejar rutas
-  providers: [PagosService], // Servicio con lógica del negocio
+  //providers: [PagosService], // Servicio con lógica del negocio
 })
 export class PaymentModule {}
