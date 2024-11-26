@@ -36,7 +36,7 @@ export interface PaymentResponse {
     marketplace_owner:           null;
     metadata:                    Metadata;
     additional_info:             AdditionalInfo;
-    reserva_id:                  number; // Relación con la reserva
+    reserva:                       Metadata;
     external_reference:          null;
     transaction_amount:          number;
     net_amount:                  number;
@@ -81,6 +81,7 @@ export interface Card {
     date_last_updated: Date;
     cardholder:        Cardholder;
 }
+
 
 export interface FeeDetail {
     type:      string;

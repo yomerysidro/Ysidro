@@ -11,21 +11,21 @@ import { PagosModule } from './metodoPagos/pagos.module';
 import { HabitacionesModule } from './habitaciones/habitaciones.module';
 import { ConfigModule } from '@nestjs/config';
 import { PromocionesModule } from './promociones/promociones.module';
+import { MercadoPagoModule } from './mercado_pago/mercado_pago.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), // Carga variables de entorno desde un archivo .env
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST || 'junction.proxy.rlwy.net', // Asegúrate de que esta variable esté bien configurada
-      port: parseInt(process.env.DB_PORT, 10) || 49599, // Usar variable de entorno o valor por defecto
+      host: process.env.DB_HOST || 'junction.proxy.rlwy.net',
+      port: parseInt(process.env.DB_PORT, 10) || 40839,
       username: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || 'iAjKNTFmOLCUYSsjAOdukCMWkzwsNtqd',
+      password: process.env.DB_PASSWORD || 'ofqofTRfPMOstJDdgDxeeJugUFyDaPYQ',
       database: process.env.DB_NAME || 'leona',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Asegúrate de que la ruta de las entidades esté correcta
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Ajusta la ruta a las entidades
       synchronize: true, // Sincronización automática de entidades
-      logging: true, // Habilita los logs para ver las consultas SQL
-      //mysql://root:iAjKNTFmOLCUYSsjAOdukCMWkzwsNtqd@junction.proxy.rlwy.net:49599/leona
+      logging: true, // Logs habilitados para depuración
     }),
     UsersModule,
     AuthModule,
@@ -34,7 +34,8 @@ import { PromocionesModule } from './promociones/promociones.module';
     ReservasModule,
     PagosModule,
     HabitacionesModule,
-    PromocionesModule
+    PromocionesModule,
+    MercadoPagoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

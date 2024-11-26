@@ -14,9 +14,10 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
+//mysql://root:ofqofTRfPMOstJDdgDxeeJugUFyDaPYQ@junction.proxy.rlwy.net:40839/leona
 
   // Configurar puerto y host desde variables de entorno o valores por defecto
-  const PORT = process.env.PORT || 49599;
+  const PORT = process.env.PORT || 40839;
   const HOST = process.env.HOST || '0.0.0.0';
 
   await app.listen(PORT, HOST);

@@ -5,5 +5,5 @@ export interface Cardholder {
 
 export interface Identification {
     number: string;
-    type: string;
+    type:   string;
 }

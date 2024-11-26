@@ -20,17 +20,13 @@ export class Reserva {
   @Column({ nullable: true })
   notes: string;
 
-
-
-  // Relación con usuarios (cada reserva pertenece a un único usuario)
-  @ManyToOne(() => User, user => user.reservas, { eager: true })
+  @ManyToOne(() => User, (user) => user.reservas, { eager: true, nullable: false })
   user: User;
 
-  // Relación con habitaciones
-  @ManyToOne(() => Habitacion, habitacion => habitacion.id, { eager: true })
+  @ManyToOne(() => Habitacion, (habitacion) => habitacion.id, { eager: true, nullable: false })
   habitacion: Habitacion;
 
-  // Relación con pagos
-  @ManyToOne(() => Pago, pago => pago.id, { eager: true })
+  @ManyToOne(() => Pago, (pago) => pago.id, { eager: true, nullable: true })
   pago: Pago;
+  
 }
